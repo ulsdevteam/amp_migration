@@ -1,0 +1,9 @@
+{
+  "name": "drupal/upgrade7_module",
+  "type": "drupal-module-custom",
+  "description": "A custom module to migrate american music content from drupal7 to new drupal 11.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

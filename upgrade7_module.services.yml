@@ -1,0 +1,13 @@
+services:
+  upgrade7_module.formatter_fixer:
+    class: Drupal\upgrade7_module\Service\FormatterFixer
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.factory'
+  upgrade7_module.post_import_subscriber:
+    class: Drupal\upgrade7_module\EventSubscriber\PostImportSubscriber
+    arguments:
+      - '@upgrade7_module.formatter_fixer'
+      - '@logger.factory'
+    tags:
+      - { name: event_subscriber }
