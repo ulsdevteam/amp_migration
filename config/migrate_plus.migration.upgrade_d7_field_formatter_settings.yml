@@ -1,4 +1,3 @@
-uuid: ff230f15-02b5-4268-96af-d370e3d5ab51
 langcode: en
 status: true
 dependencies: {  }
@@ -99,12 +98,6 @@ process:
           i18n_taxonomy_term_reference_link: entity_reference_label
           i18n_taxonomy_term_reference_plain: entity_reference_label
           entityreference_entity_view: entity_reference_entity_view
-        islandora_object_field:
-          islandora_object_field_label_formatter: entity_reference_label
-          islandora_object_field_solr_formatter: search_api_solr_highlighted_text
-          islandora_object_field_solrmetadata_byo_formatter: search_api_solr_highlighted_text
-          islandora_object_field_pid_formatter: entity_reference_entity_id
-          islandora_object_field_thumbnail_formatter: entity_reference_entity_view
         entityreference:
           entityreference_label: entity_reference_label
           entityreference_entity_id: entity_reference_entity_id
@@ -125,11 +118,20 @@ process:
           link_short: link
           link_label: link
           link_separate: link_separate
+        islandora_object_field:
+          islandora_object_field_label_formatter: entity_reference_label
+          islandora_object_field_thumbnail_formatter: entity_reference_entity_view
+          islandora_object_field_solr_formatter: search_api_solr_highlighted_text
+          islandora_object_field_solrmetadata_byo_formatter: search_api_solr_highlighted_text
     -
       plugin: d7_field_type_defaults
     -
-      plugin: skip_on_empty
-      method: row
+      plugin: skip_if_display_exists
+      entity_type: '@entity_type'
+      bundle: '@bundle'
+      view_mode: '@view_mode'
+      field_name: '@field_name'
+      log_skipped: true
   hidden:
     -
       plugin: static_map
@@ -148,7 +150,7 @@ process:
       source: constants/third_party_settings
 destination:
   plugin: component_entity_display
-idMap: null
+idMap: {  }
 migration_dependencies:
   required:
     - upgrade_d7_field_instance

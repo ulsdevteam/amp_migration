@@ -1,4 +1,3 @@
-uuid: 3a60ad97-7025-4f16-8f8e-3447489354c7
 langcode: en
 status: true
 dependencies: {  }
@@ -26,6 +25,11 @@ process:
     -
       plugin: get
       source: entity_type
+    -
+      plugin: skip_on_value
+      method: row
+      value:
+        - comment
   field_name:
     -
       plugin: get
@@ -116,7 +120,7 @@ process:
         required: 2
 destination:
   plugin: 'entity:field_config'
-idMap: null
+idMap: {  }
 migration_dependencies:
   required:
     - upgrade_d7_field

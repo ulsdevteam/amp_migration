@@ -1,4 +1,3 @@
-uuid: 431485f0-cca6-41de-81ab-7e1163b424b2
 langcode: en
 status: true
 dependencies: {  }
@@ -15,19 +14,13 @@ source:
   plugin: d7_node_complete
   node_type: page
 process:
-  nid:
-    -
-      plugin: get
-      source: tnid
-  vid:
-    -
-      plugin: get
-      source: vid
   langcode:
     -
-      plugin: default_value
+      plugin: str_replace
+      case_insensitive: false
       source: language
-      default_value: und
+      search: und
+      replace: en
   title:
     -
       plugin: get
@@ -84,12 +77,10 @@ destination:
   plugin: 'entity_complete:node'
   translations: true
   default_bundle: page
-idMap: null
+idMap: {  }
 migration_dependencies:
   required:
-    - upgrade_d7_user
     - upgrade_d7_node_type
   optional:
     - upgrade_d7_field_instance
-    - upgrade_d7_comment_field_instance
 include: null

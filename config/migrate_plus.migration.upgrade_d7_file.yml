@@ -1,4 +1,3 @@
-uuid: 2b54c4cb-3cdd-4b49-b211-b554f5d141e9
 langcode: en
 status: true
 dependencies: {  }
@@ -62,7 +61,7 @@ process:
       source: uid
 destination:
   plugin: 'entity:file'
-idMap: null
+idMap: {  }
 migration_dependencies:
   required: {  }
   optional: {  }

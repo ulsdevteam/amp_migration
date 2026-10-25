@@ -1,4 +1,3 @@
-uuid: 0a86b529-49f3-46f8-9442-0388f5d765f0
 langcode: en
 status: true
 dependencies: {  }
@@ -15,19 +14,13 @@ source:
   plugin: d7_node_complete
   node_type: exhibit_component
 process:
-  nid:
-    -
-      plugin: get
-      source: tnid
-  vid:
-    -
-      plugin: get
-      source: vid
   langcode:
     -
-      plugin: default_value
+      plugin: str_replace
+      case_insensitive: false
       source: language
-      default_value: und
+      search: und
+      replace: en
   title:
     -
       plugin: get
@@ -86,6 +79,10 @@ process:
         title: title
         width: width
         height: height
+  field_image_fid_check:
+    plugin: callback
+    callable: var_dump
+    source: fid
   field_image_copyright:
     -
       plugin: get
@@ -104,22 +101,45 @@ process:
       source: field_linked_url
   field_related_cam_collections:
     -
-      plugin: get
+      plugin: sub_process
       source: field_related_cam_collections
+      process:
+        target_id:
+          -
+            plugin: skip_on_empty
+            method: process
+            source: target_id
+          -
+            plugin: node_complete_lookup
+            migration_map_table: migrate_map_upgrade_d7_node_complete_amp_collection
+            source: target_id
   field_related_resources:
     -
-      plugin: get
+      plugin: sub_process
       source: field_related_resources
+      process:
+        target_id:
+          -
+            plugin: skip_on_empty
+            method: process
+            source: pid
+          -
+            plugin: entity_lookup
+            source: pid
+            entity_type: node
+            bundle_key: type
+            bundle: islandora_object
+            value_key: field_pid
+            ignore_case: true
+            access_check: false
 destination:
   plugin: 'entity_complete:node'
   translations: true
   default_bundle: exhibit_component
-idMap: null
+idMap: {  }
 migration_dependencies:
   required:
-    - upgrade_d7_user
     - upgrade_d7_node_type
   optional:
     - upgrade_d7_field_instance
-    - upgrade_d7_comment_field_instance
 include: null

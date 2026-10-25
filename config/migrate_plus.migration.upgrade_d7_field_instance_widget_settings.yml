@@ -1,4 +1,3 @@
-uuid: 20571ee6-4187-4d83-8613-2f33a892b480
 langcode: en
 status: true
 dependencies: {  }
@@ -31,6 +30,7 @@ process:
     -
       plugin: skip_on_empty
       method: row
+      message: 'Skipped: field storage not found in D10 — upgrade_d7d7_field may have failed for this field.'
   bundle:
     -
       plugin: migration_lookup
@@ -65,7 +65,7 @@ process:
       source: type
       method: getFieldWidgetType
   options/type:
-    type:
+    -
       plugin: static_map
       bypass: true
       source: '@widget_type'
@@ -86,13 +86,16 @@ process:
         image: image_default
         image_miw: image_image
         number_default: number_default_default
-        islandora_object_field_autocomplete: entity_reference_autocomplete
-        islandora_object_field: islandora_object_field_default
         entityreference: entityreference_default
         list: list_default
         date: datetime_default
         datetime: datetime_default
         datestamp: datetime_timestamp
+        islandora_object_field_autocomplete: entity_reference_autocomplete
+    -
+      plugin: skip_on_empty
+      method: row
+      message: 'Skipped: widget type could not be resolved to a D10 widget plugin.'
   options/settings:
     -
       plugin: field_instance_widget_settings
@@ -105,7 +108,7 @@ process:
       source: constants/third_party_settings
 destination:
   plugin: component_entity_form_display
-idMap: null
+idMap: {  }
 migration_dependencies:
   required:
     - upgrade_d7_field_instance
