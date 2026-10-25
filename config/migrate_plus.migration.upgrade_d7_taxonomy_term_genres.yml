@@ -1,3 +1,4 @@
+uuid: d5f1abf4-fce6-4e76-a528-6beda008490f
 langcode: en
 status: true
 dependencies: {  }
@@ -65,15 +66,12 @@ process:
       source: timestamp
   langcode:
     -
-      plugin: str_replace
-      case_insensitive: false
+      plugin: get
       source: language
-      search: und
-      replace: en
 destination:
   plugin: 'entity:taxonomy_term'
   default_bundle: genres
-idMap: {  }
+idMap: null
 migration_dependencies:
   required:
     - upgrade_d7_taxonomy_vocabulary

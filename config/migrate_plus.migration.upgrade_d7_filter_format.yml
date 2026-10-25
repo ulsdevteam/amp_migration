@@ -1,3 +1,4 @@
+uuid: 35be87c6-b4a0-44c5-84f3-465ec6c3a18a
 langcode: en
 status: true
 dependencies: {  }
@@ -14,10 +15,6 @@ source:
   plugin: d7_filter_format
 process:
   format:
-    -
-      plugin: callback
-      callable: var_dump
-      source: format
     -
       plugin: get
       source: format
@@ -59,7 +56,7 @@ process:
         weight: weight
 destination:
   plugin: 'entity:filter_format'
-idMap: {  }
+idMap: null
 migration_dependencies:
   required: {  }
   optional: {  }

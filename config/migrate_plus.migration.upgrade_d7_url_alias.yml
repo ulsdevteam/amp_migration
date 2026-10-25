@@ -1,3 +1,4 @@
+uuid: 90ff2d0f-31ad-43cb-a23e-48d22f731010
 langcode: en
 status: true
 dependencies: {  }
@@ -15,22 +16,10 @@ source:
   constants:
     slash: /
 process:
-  skip_check:
+  id:
     -
-      plugin: explode
-      source: source
-      delimiter: /
-    -
-      plugin: extract
-      index:
-        - 0
-    -
-      plugin: skip_on_value
-      method: row
-      not_equals: true
-      value:
-        - node
-        - taxonomy
+      plugin: get
+      source: pid
   _path:
     -
       plugin: concat
@@ -66,32 +55,6 @@ process:
         - upgrade_d7_node_complete_songs
     -
       plugin: node_complete_node_translation_lookup
-  path_node:
-    -
-      plugin: path_set_translated
-      source:
-        - '@_path'
-        - '@node_translation'
-  term_destid:
-    -
-      plugin: explode
-      source: source
-      delimiter: /
-    -
-      plugin: extract
-      default: INVALID_TID
-      index:
-        - 2
-    -
-      plugin: migration_lookup
-      migration:
-        - upgrade_d7_taxonomy_term_genres
-        - upgrade_d7_taxonomy_term_publisers
-  path_term:
-    -
-      plugin: build_prefixed_path
-      source: '@term_destid'
-      prefix: taxonomy/term
   langcode:
     -
       plugin: null_coalesce
@@ -100,17 +63,15 @@ process:
         - language
   path:
     -
-      plugin: null_coalesce
+      plugin: path_set_translated
       source:
-        - '@path_term'
-        - '@path_node'
-    -
-      plugin: skip_on_empty
-      method: row
+        - '@_path'
+        - '@node_translation'
 destination:
   plugin: 'entity:path_alias'
-idMap: {  }
+idMap: null
 migration_dependencies:
+  required: {  }
   optional:
     - upgrade_d7_node_complete_amp_collection
     - upgrade_d7_node_complete_article
@@ -120,6 +81,12 @@ migration_dependencies:
     - upgrade_d7_node_complete_page
     - upgrade_d7_node_complete_performers
     - upgrade_d7_node_complete_songs
-    - upgrade_d7_taxonomy_term_genres
-    - upgrade_d7_taxonomy_term_publisers
+    - upgrade_d7_node_complete_amp_collection
+    - upgrade_d7_node_complete_article
+    - upgrade_d7_node_complete_composers
+    - upgrade_d7_node_complete_exhibits
+    - upgrade_d7_node_complete_exhibit_component
+    - upgrade_d7_node_complete_page
+    - upgrade_d7_node_complete_performers
+    - upgrade_d7_node_complete_songs
 include: null

@@ -1,3 +1,4 @@
+uuid: 3cf91b65-b6ba-4e23-99f2-adeb131e7e51
 langcode: en
 status: true
 dependencies: {  }
@@ -17,21 +18,9 @@ source:
 process:
   type:
     -
-      plugin: skip_on_value
-      source: type
-      value:
-        - article
-        - page
-      method: row
-      message: 'Skipped because this content type already exists in D10'
-    -
       plugin: get
       source: type
   name:
-    -
-      plugin: callback
-      callable: var_dump
-      source: name
     -
       plugin: get
       source: name
@@ -89,7 +78,7 @@ process:
         'user-menu:0:': 'account:'
 destination:
   plugin: 'entity:node_type'
-idMap: {  }
+idMap: null
 migration_dependencies:
   required: {  }
   optional: {  }

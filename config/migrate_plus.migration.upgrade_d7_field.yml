@@ -1,3 +1,4 @@
+uuid: 12b45954-ec2b-43e4-b8d8-4862edc9ae6c
 langcode: en
 status: true
 dependencies: {  }
@@ -46,6 +47,8 @@ process:
           image: image
         number_default:
           number_default: number_default
+        islandora_object_field:
+          islandora_object_field: islandora_object_field
         entityreference:
           entityreference: entityreference
         list:
@@ -54,8 +57,6 @@ process:
           datetime: datetime
         link_field:
           link_field: link_field
-        islandora_object_field:
-          islandora_object_field: entity_reference
   cardinality:
     -
       plugin: get
@@ -66,9 +67,13 @@ process:
   third_party_settings/field_permissions:
     -
       plugin: d7_field_permission_settings
+  settings/target_type:
+    -
+      plugin: default_value
+      default_value: node
 destination:
   plugin: 'entity:field_storage_config'
-idMap: {  }
+idMap: null
 migration_dependencies:
   required: {  }
   optional: {  }

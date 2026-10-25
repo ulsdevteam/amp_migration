@@ -1,3 +1,4 @@
+uuid: b9ba36cd-6e2a-457c-8633-13d324af18cb
 langcode: en
 status: true
 dependencies: {  }
@@ -28,10 +29,6 @@ process:
       migration: upgrade_d7_taxonomy_vocabulary
       source: vid
   name:
-    -
-      plugin: callback
-      callable: var_dump
-      source: name
     -
       plugin: get
       source: name
@@ -74,7 +71,7 @@ process:
 destination:
   plugin: 'entity:taxonomy_term'
   default_bundle: publishers
-idMap: {  }
+idMap: null
 migration_dependencies:
   required:
     - upgrade_d7_taxonomy_vocabulary

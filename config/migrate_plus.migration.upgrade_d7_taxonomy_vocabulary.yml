@@ -1,3 +1,4 @@
+uuid: 6d8ed3af-5ece-44ba-bf7c-3a1b7562fa38
 langcode: en
 status: true
 dependencies: {  }
@@ -27,10 +28,6 @@ process:
       source: name
   name:
     -
-      plugin: callback
-      callable: var_dump
-      source: name
-    -
       plugin: get
       source: name
   description:
@@ -43,7 +40,7 @@ process:
       source: weight
 destination:
   plugin: 'entity:taxonomy_vocabulary'
-idMap: {  }
+idMap: null
 migration_dependencies:
   required: {  }
   optional: {  }

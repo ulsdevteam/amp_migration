@@ -1,3 +1,4 @@
+uuid: 66976926-3d3f-4b0d-9845-91ab550a9998
 langcode: en
 status: true
 dependencies: {  }
@@ -14,13 +15,19 @@ source:
   plugin: d7_node_complete
   node_type: amp_collection
 process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  vid:
+    -
+      plugin: get
+      source: vid
   langcode:
     -
-      plugin: str_replace
-      case_insensitive: false
+      plugin: default_value
       source: language
-      search: und
-      replace: en
+      default_value: und
   title:
     -
       plugin: get
@@ -65,29 +72,18 @@ process:
     -
       plugin: get
       source: source_langcode
+  comment_node_amp_collection/0/status:
+    -
+      plugin: get
+      source: comment
   body:
     -
       plugin: get
       source: body
   field_related_collections:
     -
-      plugin: sub_process
+      plugin: get
       source: field_related_collections
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_local_identifier
-            ignore_case: true
-            access_check: false
   field_related_genre:
     -
       plugin: sub_process
@@ -96,27 +92,7 @@ process:
         target_id: tid
   field_finding_aids:
     -
-      plugin: sub_process
-      source: field_finding_aids
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_pid
-            ignore_case: true
-            access_check: false
-  check-findingaid:
-    -
-      plugin: callback
-      callable: var_dump
+      plugin: get
       source: field_finding_aids
   field_image:
     -
@@ -140,10 +116,12 @@ destination:
   plugin: 'entity_complete:node'
   translations: true
   default_bundle: amp_collection
-idMap: {  }
+idMap: null
 migration_dependencies:
   required:
+    - upgrade_d7_user
     - upgrade_d7_node_type
   optional:
     - upgrade_d7_field_instance
+    - upgrade_d7_comment_field_instance
 include: null

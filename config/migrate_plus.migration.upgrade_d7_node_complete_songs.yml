@@ -1,3 +1,4 @@
+uuid: 617f655f-f89d-4551-9f80-0f16ac7c44c9
 langcode: en
 status: true
 dependencies: {  }
@@ -14,13 +15,19 @@ source:
   plugin: d7_node_complete
   node_type: songs
 process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  vid:
+    -
+      plugin: get
+      source: vid
   langcode:
     -
-      plugin: str_replace
-      case_insensitive: false
+      plugin: default_value
       source: language
-      search: und
-      replace: en
+      default_value: und
   title:
     -
       plugin: get
@@ -65,18 +72,14 @@ process:
     -
       plugin: get
       source: source_langcode
-  body/value:
+  comment_node_songs/0/status:
     -
       plugin: get
-      source: body/0/value
-  body/summary:
+      source: comment
+  body:
     -
       plugin: get
-      source: body/0/summary
-  body/format:
-    -
-      plugin: default_value
-      default_value: full_html
+      source: body
   field_alternate_title:
     -
       plugin: get
@@ -87,173 +90,49 @@ process:
       source: field_year_of_publication
   field_manuscript:
     -
-      plugin: sub_process
+      plugin: get
       source: field_manuscript
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_pid
-            ignore_case: true
-            access_check: false
   field_published_score:
     -
-      plugin: sub_process
+      plugin: get
       source: field_published_score
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_pid
-            ignore_case: true
-            access_check: false
   field_songbook:
     -
-      plugin: sub_process
+      plugin: get
       source: field_songbook
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_pid
-            ignore_case: true
-            access_check: false
   field_correspondence:
     -
-      plugin: sub_process
+      plugin: get
       source: field_correspondence
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_pid
-            ignore_case: true
-            access_check: false
   field_business_records:
     -
-      plugin: sub_process
+      plugin: get
       source: field_business_records
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_pid
-            ignore_case: true
-            access_check: false
   field_recording_songs:
     -
-      plugin: sub_process
+      plugin: get
       source: field_recording_songs
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: pid
-          -
-            plugin: entity_lookup
-            source: pid
-            entity_type: node
-            bundle_key: type
-            bundle: islandora_object
-            value_key: field_pid
-            ignore_case: true
-            access_check: false
   field_related_genre:
     -
       plugin: sub_process
       source: field_related_genre
       process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: tid
-          -
-            plugin: migration_lookup
-            migration: upgrade_d7_taxonomy_term_genres
-            source: tid
+        target_id: tid
   field_composed_by:
     -
-      plugin: sub_process
+      plugin: get
       source: field_composed_by
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: target_id
-          -
-            plugin: node_complete_lookup
-            migration_map_table: migrate_map_upgrade_d7_node_complete_composers
-            source: target_id
   field_related_cam_collections:
     -
-      plugin: sub_process
+      plugin: get
       source: field_related_cam_collections
-      process:
-        target_id:
-          -
-            plugin: skip_on_empty
-            method: process
-            source: target_id
-          -
-            plugin: node_complete_lookup
-            migration_map_table: migrate_map_upgrade_d7_node_complete_amp_collection
-            source: target_id
   field_image:
     -
       plugin: sub_process
       source: field_image
       process:
         target_id: fid
-        alt:
-          -
-            plugin: get
-            source: alt
-          -
-            plugin: default_value
-            default_value: Image
+        alt: alt
         title: title
         width: width
         height: height
@@ -299,10 +178,12 @@ destination:
   plugin: 'entity_complete:node'
   translations: true
   default_bundle: songs
-idMap: {  }
+idMap: null
 migration_dependencies:
   required:
+    - upgrade_d7_user
     - upgrade_d7_node_type
   optional:
     - upgrade_d7_field_instance
+    - upgrade_d7_comment_field_instance
 include: null
