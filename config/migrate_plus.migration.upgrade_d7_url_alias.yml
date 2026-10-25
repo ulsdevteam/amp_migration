@@ -1,0 +1,125 @@
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_url_alias
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: migrate_drupal_7
+label: 'URL aliases'
+source:
+  plugin: d7_url_alias
+  constants:
+    slash: /
+process:
+  skip_check:
+    -
+      plugin: explode
+      source: source
+      delimiter: /
+    -
+      plugin: extract
+      index:
+        - 0
+    -
+      plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - node
+        - taxonomy
+  _path:
+    -
+      plugin: concat
+      source:
+        - constants/slash
+        - source
+  alias:
+    -
+      plugin: concat
+      source:
+        - constants/slash
+        - alias
+  node_translation:
+    -
+      plugin: explode
+      source: source
+      delimiter: /
+    -
+      plugin: extract
+      default: INVALID_NID
+      index:
+        - 1
+    -
+      plugin: migration_lookup
+      migration:
+        - upgrade_d7_node_complete_amp_collection
+        - upgrade_d7_node_complete_article
+        - upgrade_d7_node_complete_composers
+        - upgrade_d7_node_complete_exhibits
+        - upgrade_d7_node_complete_exhibit_component
+        - upgrade_d7_node_complete_page
+        - upgrade_d7_node_complete_performers
+        - upgrade_d7_node_complete_songs
+    -
+      plugin: node_complete_node_translation_lookup
+  path_node:
+    -
+      plugin: path_set_translated
+      source:
+        - '@_path'
+        - '@node_translation'
+  term_destid:
+    -
+      plugin: explode
+      source: source
+      delimiter: /
+    -
+      plugin: extract
+      default: INVALID_TID
+      index:
+        - 2
+    -
+      plugin: migration_lookup
+      migration:
+        - upgrade_d7_taxonomy_term_genres
+        - upgrade_d7_taxonomy_term_publisers
+  path_term:
+    -
+      plugin: build_prefixed_path
+      source: '@term_destid'
+      prefix: taxonomy/term
+  langcode:
+    -
+      plugin: null_coalesce
+      source:
+        - '@node_translation/1'
+        - language
+  path:
+    -
+      plugin: null_coalesce
+      source:
+        - '@path_term'
+        - '@path_node'
+    -
+      plugin: skip_on_empty
+      method: row
+destination:
+  plugin: 'entity:path_alias'
+idMap: {  }
+migration_dependencies:
+  optional:
+    - upgrade_d7_node_complete_amp_collection
+    - upgrade_d7_node_complete_article
+    - upgrade_d7_node_complete_composers
+    - upgrade_d7_node_complete_exhibits
+    - upgrade_d7_node_complete_exhibit_component
+    - upgrade_d7_node_complete_page
+    - upgrade_d7_node_complete_performers
+    - upgrade_d7_node_complete_songs
+    - upgrade_d7_taxonomy_term_genres
+    - upgrade_d7_taxonomy_term_publisers
+include: null
