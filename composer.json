@@ -5,5 +5,9 @@
   "keywords": ["Drupal"],
   "license": "GPL-2.0-or-later",
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "require": {
+    "drupal/migrate_upgrade": "^4.0",
+    "drupal/colorbox": "^2.2"
+  }
 }
