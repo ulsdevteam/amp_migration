@@ -14,14 +14,6 @@ source:
   plugin: d7_taxonomy_term
   bundle: publishers
 process:
-  tid:
-    -
-      plugin: get
-      source: tid
-  revision_id:
-    -
-      plugin: get
-      source: tid
   vid:
     -
       plugin: migration_lookup
@@ -69,8 +61,11 @@ process:
       source: timestamp
   langcode:
     -
-      plugin: get
+      plugin: str_replace
+      case_insensitive: false
       source: language
+      search: und
+      replace: en
 destination:
   plugin: 'entity:taxonomy_term'
   default_bundle: publishers

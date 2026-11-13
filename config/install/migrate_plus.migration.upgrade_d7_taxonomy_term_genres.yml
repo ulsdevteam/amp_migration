@@ -14,14 +14,6 @@ source:
   plugin: d7_taxonomy_term
   bundle: genres
 process:
-  tid:
-    -
-      plugin: get
-      source: tid
-  revision_id:
-    -
-      plugin: get
-      source: tid
   vid:
     -
       plugin: migration_lookup
