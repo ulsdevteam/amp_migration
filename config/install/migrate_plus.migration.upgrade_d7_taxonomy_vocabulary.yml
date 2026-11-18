@@ -15,6 +15,12 @@ source:
 process:
   vid:
     -
+      plugin: skip_on_value
+      method: row
+      source: machine_name
+      value:
+        - tags
+    -
       plugin: make_unique_entity_field
       source: machine_name
       entity_type: taxonomy_vocabulary

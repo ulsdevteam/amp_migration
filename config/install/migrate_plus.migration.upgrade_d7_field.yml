@@ -28,6 +28,11 @@ process:
     -
       plugin: get
       source: constants/langcode
+    -
+      plugin: static_map
+      map:
+        und: en
+      bypass: true
   field_name:
     -
       plugin: get
